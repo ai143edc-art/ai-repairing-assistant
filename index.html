@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Repairing Assistant — Your AI bench partner for board-level repair</title>
+<meta name="description" content="An AI-powered Windows desktop app for mobile-phone motherboard (micro-soldering) repair. Diagnose board faults, open schematics & boardviews, search Telegram, and control everything by voice. Powered by Google Gemini." />
+<meta name="theme-color" content="#06090F" />
+<meta name="author" content="Vikku" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="color-scheme" content="dark" />
+
+<!-- Security: strict CSP. No inline scripts, no eval, no third-party JS. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests" />
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="AI Repairing Assistant" />
+<meta property="og:description" content="A voice-first AI bench partner for board-level mobile-phone repair. Schematics, boardviews, live voice, and full app control — powered by Google Gemini." />
+<meta property="og:image" content="assets/img/logo-256.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+
+<!-- animated background -->
+<div class="bg-fx" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow--1"></div>
+  <div class="bg-glow bg-glow--2"></div>
+  <div class="bg-scan"></div>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="container nav__inner">
+    <a class="brand" href="#top" aria-label="AI Repairing Assistant home">
+      <img class="brand__logo" src="assets/img/logo-256.png" alt="" width="40" height="40" />
+      <span class="brand__text">AI&nbsp;Repairing<span class="brand__accent">Assistant</span></span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="nav__actions">
+      <a class="btn btn--ghost btn--sm" href="#install">Install guide</a>
+      <a class="btn btn--accent btn--sm" href="#download" data-dl>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+        Download
+      </a>
+      <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav__mobile" id="mobileMenu" hidden>
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="#requirements">Requirements</a>
+    <a href="#faq">FAQ</a>
+    <a class="btn btn--accent" href="#download" data-dl>Download for Windows</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__copy reveal">
+        <span class="eyebrow"><span class="eyebrow__dot"></span> Voice-first • Board-level • AI-powered</span>
+        <h1 class="hero__title">
+          Your AI <span class="grad">bench partner</span><br />for board-level repair
+        </h1>
+        <p class="hero__lede">
+          A Windows desktop app for mobile-phone <strong>motherboard / micro-soldering</strong> repair.
+          It diagnoses faults, opens schematics &amp; interactive boardviews, finds the right diagram from
+          your Telegram groups, talks in real time, and runs the whole app by voice — in
+          <strong>Hindi, Hinglish &amp; English</strong>.
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn btn--accent btn--lg" href="#download" data-dl>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+            Download for Windows
+          </a>
+          <a class="btn btn--ghost btn--lg" href="#features">Explore features</a>
+        </div>
+
+        <ul class="hero__meta">
+          <li><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 5.5 12 3l9 2.5v6c0 5-3.8 8.4-9 9.5-5.2-1.1-9-4.5-9-9.5v-6Z" opacity=".25"/><path fill="currentColor" d="m10.6 13.4-2-2a1 1 0 0 0-1.4 1.4l2.7 2.7a1 1 0 0 0 1.42 0l5-5a1 1 0 1 0-1.42-1.42L10.6 13.4Z"/></svg> Free &amp; full</li>
+          <li><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M4 4h16v12H4z" opacity=".25"/><path fill="currentColor" d="M3 18h18v2H3zM6 6h12v8H6z"/></svg> Windows 10 / 11 (64-bit)</li>
+          <li><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2 4 6v6c0 5 8 8 8 8s8-3 8-8V6l-8-4Z"/></svg> Keys encrypted on-device</li>
+        </ul>
+        <p class="hero__verline">v10.1.7 &nbsp;·&nbsp; 71&nbsp;MB &nbsp;·&nbsp; Built with .NET&nbsp;9 + Google&nbsp;Gemini</p>
+      </div>
+
+      <div class="hero__art reveal" aria-hidden="true">
+        <div class="reactor-wrap">
+          <canvas id="reactor" width="560" height="560"></canvas>
+          <div class="reactor-status" id="reactorStatus">
+            <span class="reactor-status__dot"></span>
+            <span class="reactor-status__txt">SYSTEM ONLINE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- trust strip -->
+    <div class="container">
+      <div class="trust reveal">
+        <span class="trust__label">Built on</span>
+        <div class="trust__items">
+          <span>Google Gemini</span><i></i>
+          <span>.NET 9 · WPF</span><i></i>
+          <span>SkiaSharp HUD</span><i></i>
+          <span>SQLite</span><i></i>
+          <span>Tesseract OCR</span><i></i>
+          <span>Hindi · Hinglish · English</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats container">
+    <div class="stat reveal"><span class="stat__num" data-count="11">11</span><span class="stat__lbl">core toolsets</span></div>
+    <div class="stat reveal"><span class="stat__num" data-count="3">3</span><span class="stat__lbl">languages, one brain</span></div>
+    <div class="stat reveal"><span class="stat__num" data-count="100">100</span><span class="stat__suf">%</span><span class="stat__lbl">voice-controllable</span></div>
+    <div class="stat reveal"><span class="stat__num">0</span><span class="stat__lbl">keys ever stored in plaintext</span></div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="kicker">Capabilities</span>
+        <h2>Everything a micro-soldering bench needs — in one window</h2>
+        <p>From the first photo of a dead board to the exported repair report, every step has an AI co-pilot.</p>
+      </div>
+
+      <div class="bento">
+        <article class="card card--wide reveal">
+          <div class="card__icon">💬</div>
+          <h3>Intelligent multimodal chat</h3>
+          <p>Repair-domain tuned and tri-lingual (Hindi / Hinglish / English). Drop a board photo or a PDF and ask — it reads schematics, reasons about faults, and answers like a senior technician.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">📄</div>
+          <h3>Schematic viewer</h3>
+          <p>Open PDF schematics with zoom / pan / fit, search-highlight components &amp; nets, OCR for scanned sheets, and “select an area → ask AI”.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🗺️</div>
+          <h3>Boardview viewer</h3>
+          <p>Interactive <code>.brd / .bvr / .cad</code> maps. Click a component to see its pins &amp; nets; click a net and it lights up across the whole board. Top/bottom toggle &amp; designator search.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🔎</div>
+          <h3>Telegram schematic search</h3>
+          <p>Describe a fault — “iPhone 11 no backlight” — and it finds and opens the matching schematic straight from your Telegram groups.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">📷</div>
+          <h3>Live board camera</h3>
+          <p>Use your phone as a wireless HD camera (free <em>IP&nbsp;Webcam</em> app over WiFi/USB), capture a board photo, and send it straight to the AI.</p>
+        </article>
+
+        <article class="card card--wide reveal">
+          <div class="card__icon">🎙️</div>
+          <h3>Full voice, hands-free</h3>
+          <p>Natural streaming TTS with <strong>gapless</strong> playback, a replay button on every reply, <strong>live real-time conversation</strong> (Gemini Live), and an optional wake word — talk to your bench while both hands hold the iron.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🧭</div>
+          <h3>Control it all by voice</h3>
+          <p>Open tabs &amp; windows, manage repair jobs, export reports, change settings — every action is a spoken or typed command via Gemini function-calling.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">📊</div>
+          <h3>Pro dashboard</h3>
+          <p>A three-column cockpit: live repair-logs table, key-metric charts, and chat — rendered on a custom SkiaSharp HUD.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🧰</div>
+          <h3>Jumper &amp; solutions library</h3>
+          <p>Your own searchable library of jumpers and proven fixes, keyboard shortcuts everywhere (press F1 to list), and one-click PDF export of any repair.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon">🔐</div>
+          <h3>Private by design</h3>
+          <p>API keys are encrypted at rest with Windows DPAPI — never plaintext. An optional PIN / password lock (PBKDF2-SHA256) gates the whole app at startup.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DEEP DIVE ============ -->
+  <section class="section section--alt" id="showcase">
+    <div class="container">
+      <div class="split">
+        <div class="split__media reveal">
+          <div class="mock mock--board">
+            <div class="mock__bar"><i></i><i></i><i></i><span>Boardview · iPhone — top</span></div>
+            <div class="mock__board">
+              <div class="net-line net-line--1"></div>
+              <div class="net-line net-line--2"></div>
+              <span class="comp comp--u comp--p1">U2</span>
+              <span class="comp comp--p2">C1</span>
+              <span class="comp comp--hot comp--p3">U_PMIC</span>
+              <span class="comp comp--p4">L4</span>
+              <span class="comp comp--p5">FL2</span>
+              <span class="comp comp--u comp--p6">J_CONN</span>
+            </div>
+            <div class="mock__hint">Click a net → it lights across the board</div>
+          </div>
+        </div>
+        <div class="split__copy reveal">
+          <span class="kicker">See the board, not just the schematic</span>
+          <h2>Trace a net across the whole board in one click</h2>
+          <p>Load a <code>.brd</code>, <code>.bvr</code> or <code>.cad</code> file and the board becomes a live map. Tap any component to inspect its pins and nets; tap a net and every pad it touches lights up — top and bottom. Lost the designator? Search it. Stuck? Hit <em>“Ask AI about this”</em> and the model answers with the board in context.</p>
+          <ul class="ticks">
+            <li>Component → pins &amp; nets, instantly</li>
+            <li>Net highlight across top &amp; bottom</li>
+            <li>Search by designator or net name</li>
+            <li>Selection sent to the AI with full context</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="split split--rev">
+        <div class="split__media reveal">
+          <div class="mock mock--dash">
+            <div class="mock__bar"><i></i><i></i><i></i><span>Dashboard · live</span></div>
+            <div class="dash">
+              <div class="dash__nav">
+                <span class="on">▦ Overview</span><span>🧾 Jobs</span><span>📈 Metrics</span><span>💬 Chat</span><span>⚙ Settings</span>
+              </div>
+              <div class="dash__main">
+                <div class="dash__cards">
+                  <div class="dchip"><span>Open jobs</span><b>7</b></div>
+                  <div class="dchip"><span>Fixed today</span><b>12</b></div>
+                  <div class="dchip"><span>Success</span><b>94%</b></div>
+                </div>
+                <div class="dash__chart"><svg viewBox="0 0 320 90" preserveAspectRatio="none" aria-hidden="true"><polyline class="spark" points="0,70 40,55 80,62 120,38 160,44 200,24 240,30 280,14 320,20"/></svg></div>
+                <div class="dash__rows">
+                  <div class="drow"><span class="dot ok"></span>iPhone 11 · no backlight<span class="t">done</span></div>
+                  <div class="drow"><span class="dot wk"></span>Redmi · no power<span class="t">diag</span></div>
+                  <div class="drow"><span class="dot ok"></span>Samsung · no charging<span class="t">done</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="split__copy reveal">
+          <span class="kicker">Run the bench, not the mouse</span>
+          <h2>A cockpit that talks back</h2>
+          <p>The pro dashboard keeps your live repair log, key metrics and chat side by side. Say <em>“open the iPhone 11 job”</em>, <em>“export this as PDF”</em>, or <em>“switch to boardview”</em> — the app obeys. The arc-reactor HUD glows green when it’s listening, amber when it’s thinking, teal when it speaks.</p>
+          <ul class="ticks">
+            <li>Live repair-logs table &amp; metric charts</li>
+            <li>Full app control by voice or text</li>
+            <li>Gapless real-time voice conversation</li>
+            <li>One-click PDF export of any job</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS / INSTALL ============ -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="kicker">Up and running in 3 steps</span>
+        <h2 id="install">Install in under two minutes</h2>
+        <p>No admin rights needed. The .NET runtime is bundled — there’s nothing else to install.</p>
+      </div>
+
+      <div class="steps">
+        <article class="step reveal">
+          <span class="step__no">1</span>
+          <h3>Download &amp; run</h3>
+          <p>Click <strong>Download</strong>, then double-click <code>AI-Repairing-Assistant-Setup-10.1.7.exe</code>. On first launch Windows SmartScreen may warn (the app isn’t code-signed yet) — choose <strong>More info → Run anyway</strong>.</p>
+        </article>
+        <article class="step reveal">
+          <span class="step__no">2</span>
+          <h3>Install</h3>
+          <p>Hit <strong>Next → Install</strong>. Shortcuts land in your Start Menu and on the Desktop. It’s a per-user install, so no administrator password is required.</p>
+        </article>
+        <article class="step reveal">
+          <span class="step__no">3</span>
+          <h3>Add your free Gemini key</h3>
+          <p>Open <strong>Settings (gear) → AI Engine</strong>, paste a free key from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>, click <strong>Test Key</strong> → <strong>Save</strong>. Chat, photo, voice and schematics all come alive.</p>
+        </article>
+      </div>
+
+      <div class="callout reveal">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 2 1 21h22L12 2Zm0 5 7.5 13h-15L12 7Z" opacity=".3"/><path fill="currentColor" d="M11 10h2v5h-2zm0 6h2v2h-2z"/></svg>
+        <p><strong>SmartScreen note:</strong> the warning appears only because the installer isn’t signed with a paid certificate — not because anything’s wrong. The download below has a published SHA-256 you can verify.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DOWNLOAD ============ -->
+  <section class="section section--alt download" id="download">
+    <div class="container">
+      <div class="dl reveal">
+        <div class="dl__art" aria-hidden="true">
+          <canvas id="reactorSmall" width="260" height="260"></canvas>
+        </div>
+        <div class="dl__body">
+          <span class="kicker">Download</span>
+          <h2>Get AI Repairing Assistant</h2>
+          <p>The complete app — chat, schematics, boardviews, voice and dashboard. Free, no account, nothing to sign up for.</p>
+
+          <a class="btn btn--accent btn--xl" id="dlBtn"
+             href="https://github.com/ai143edc-art/ai-repairing-assistant/releases/download/v10.1.7/AI-Repairing-Assistant-Setup-10.1.7.exe"
+             rel="noopener">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+            Download for Windows
+          </a>
+
+          <ul class="dl__meta">
+            <li><span>Version</span><b>10.1.7</b></li>
+            <li><span>Size</span><b>71.1 MB</b></li>
+            <li><span>Platform</span><b>Windows 10 / 11 · 64-bit</b></li>
+            <li><span>Price</span><b>Free</b></li>
+          </ul>
+
+          <p class="dl__hash">
+            <span>SHA-256</span>
+            <code id="hashCode">E3194B88593E0E656AAF7BBAE7D37B322A70B146EE7907F8F15ECE888F054184</code>
+            <button class="copy" id="copyHash" aria-label="Copy SHA-256">Copy</button>
+          </p>
+          <p class="dl__note">Requires an internet connection and a free Google Gemini API key (added on first run).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REQUIREMENTS ============ -->
+  <section class="section" id="requirements">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="kicker">Before you start</span>
+        <h2>Requirements</h2>
+      </div>
+      <div class="reqs">
+        <div class="req reveal">
+          <h3>Required</h3>
+          <ul class="ticks">
+            <li>Windows 10 / 11 (64-bit)</li>
+            <li>An internet connection (the AI runs in the cloud)</li>
+            <li>A free Google Gemini API key</li>
+          </ul>
+        </div>
+        <div class="req reveal">
+          <h3>Optional power-ups</h3>
+          <ul class="ticks ticks--dim">
+            <li>Sarvam key — extra natural TTS voices</li>
+            <li>Picovoice key — custom wake word</li>
+            <li>Telegram api_id / api_hash — schematic search</li>
+            <li>A phone running IP Webcam — live board camera</li>
+          </ul>
+        </div>
+        <div class="req reveal">
+          <h3>Bundled — nothing to install</h3>
+          <ul class="ticks">
+            <li>.NET 9 runtime (ships inside the app)</li>
+            <li>OCR engine (Tesseract, English data)</li>
+            <li>SQLite storage &amp; PDF export</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section section--alt" id="faq">
+    <div class="container container--narrow">
+      <div class="section__head reveal">
+        <span class="kicker">Questions</span>
+        <h2>Frequently asked</h2>
+      </div>
+
+      <div class="faq">
+        <details class="reveal">
+          <summary>Is it really free?</summary>
+          <p>Yes. The app is free and full-featured. You only need a Google Gemini API key, which Google provides free at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>.</p>
+        </details>
+        <details class="reveal">
+          <summary>Why does Windows show a SmartScreen warning?</summary>
+          <p>Because the installer isn’t signed with a paid code-signing certificate. It’s safe to proceed — click <strong>More info → Run anyway</strong>. You can also verify the SHA-256 hash published on this page against your downloaded file.</p>
+        </details>
+        <details class="reveal">
+          <summary>Where is my API key stored?</summary>
+          <p>Encrypted on your PC using Windows DPAPI, in <code>%AppData%\PhoneRepairAssistant\config.json</code> — never in plaintext and never sent anywhere except Google’s API. You can also lock the whole app behind a PIN or password.</p>
+        </details>
+        <details class="reveal">
+          <summary>Which languages does it understand?</summary>
+          <p>Hindi, Hinglish and English — type or speak in any of them. The model is tuned for board-level repair vocabulary.</p>
+        </details>
+        <details class="reveal">
+          <summary>Does it work offline?</summary>
+          <p>The AI features need internet because the model runs in the cloud. Local tools — opening schematics, boardviews, OCR and your jumper library — work without a connection.</p>
+        </details>
+        <details class="reveal">
+          <summary>How do I uninstall it?</summary>
+          <p>Open <strong>Settings → Apps → Installed apps</strong> (or Add/Remove Programs), find <em>AI Repairing Assistant</em> and click Uninstall.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="section finalcta">
+    <div class="container reveal">
+      <h2>Put AI on your repair bench today</h2>
+      <p>Diagnose faster, find the right schematic in seconds, and keep both hands on the iron.</p>
+      <a class="btn btn--accent btn--xl" href="#download" data-dl>Download for Windows — free</a>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <img src="assets/img/logo-256.png" alt="" width="34" height="34" />
+      <div>
+        <strong>AI Repairing Assistant</strong>
+        <span>Made for board-level mobile-phone repair technicians.</span>
+      </div>
+    </div>
+    <nav class="footer__links" aria-label="Footer">
+      <a href="#features">Features</a>
+      <a href="#how">Install</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#faq">FAQ</a>
+      <a href="#download" data-dl>Download</a>
+    </nav>
+  </div>
+  <div class="container footer__bottom">
+    <span>© <span id="year">2026</span> AI Repairing Assistant · v10.1.7</span>
+    <span>Built with C# / WPF / .NET 9 &amp; Google Gemini</span>
+  </div>
+</footer>
+
+<script src="assets/js/reactor.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Netlify / Cloudflare Pages config — static site, no build step.
+# Security + cache headers live in the _headers file (auto-applied).
+[build]
+  publish = "."
+  command = ""
+
+[[redirects]]
+  from = "/download"
+  to = "/#download"
+  status = 302
