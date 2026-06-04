@@ -355,6 +355,26 @@
             <code id="hashCode">E3194B88593E0E656AAF7BBAE7D37B322A70B146EE7907F8F15ECE888F054184</code>
             <button class="copy" id="copyHash" aria-label="Copy SHA-256">Copy</button>
           </p>
+
+          <!-- one-click integrity verifier -->
+          <div class="verify">
+            <label class="verify__label" for="verifyInput">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 8.5 8 9.9 4.6-1.4 8-4.9 8-9.9V5l-8-3Z" opacity=".25"/><path fill="currentColor" d="m10.6 13.6-2-2a1 1 0 1 0-1.4 1.42l2.7 2.7a1 1 0 0 0 1.42 0l5-5A1 1 0 0 0 14.9 9.3l-4.3 4.3Z"/></svg>
+              Verify your download — paste the SHA-256 you got from PowerShell, then hit <strong>Check</strong>:
+            </label>
+            <div class="verify__row">
+              <input id="verifyInput" class="verify__input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Paste your computed SHA-256 here…" />
+              <button id="verifyBtn" class="btn btn--accent verify__btn" type="button">Check</button>
+            </div>
+            <p id="verifyResult" class="verify__result" role="status" aria-live="polite"></p>
+            <details class="verify__how">
+              <summary>How do I get my file's hash?</summary>
+              <p>Open <strong>PowerShell</strong> and run:<br/>
+              <code>Get-FileHash "$HOME\Downloads\AI-Repairing-Assistant-Setup-10.1.7.exe" -Algorithm SHA256</code><br/>
+              Copy the <em>Hash</em> it prints, paste it above, and click Check. (Spaces/upper-lower case don't matter.)</p>
+            </details>
+          </div>
+
           <p class="dl__note">Requires an internet connection and a free Google Gemini API key (added on first run).</p>
         </div>
       </div>

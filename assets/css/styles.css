@@ -315,6 +315,30 @@ h1,h2,h3{line-height:1.12;letter-spacing:-.02em;margin:0}
 .copy.copied{color:#34D399;border-color:#34D399}
 .dl__note{color:var(--muted);font-size:13px;margin:8px 0 0}
 
+/* one-click hash verifier */
+.verify{margin:18px 0 0;padding:18px 20px;border:1px solid var(--border);border-radius:14px;background:rgba(6,9,15,.45)}
+.verify__label{display:flex;align-items:flex-start;gap:8px;color:#c2cee0;font-size:13.5px;margin-bottom:12px;line-height:1.55}
+.verify__label svg{color:var(--accent);flex:0 0 auto;margin-top:2px}
+.verify__label strong{color:var(--accent)}
+.verify__row{display:flex;gap:10px;flex-wrap:wrap}
+.verify__input{flex:1 1 280px;min-width:0;font-family:var(--mono);font-size:12.5px;color:var(--text);
+  background:var(--field);border:1px solid var(--border);border-radius:10px;padding:12px 14px;outline:none;
+  transition:border-color .2s,box-shadow .2s}
+.verify__input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.15)}
+.verify__input::placeholder{color:var(--muted)}
+.verify__btn{flex:0 0 auto;padding:12px 26px}
+.verify__result{margin:13px 0 0;font-size:14px;font-weight:600;line-height:1.5;min-height:1.2em}
+.verify__result.ok{color:#34D399}
+.verify__result.bad{color:#FB7185}
+.verify__result.hint{color:var(--muted);font-weight:500}
+.verify__how{margin-top:12px}
+.verify__how summary{cursor:pointer;color:var(--accent);font-size:12.5px;font-weight:600;list-style:none}
+.verify__how summary::-webkit-details-marker{display:none}
+.verify__how summary::before{content:"▸ "}
+.verify__how[open] summary::before{content:"▾ "}
+.verify__how p{color:var(--muted);font-size:12.5px;line-height:1.7;margin:10px 0 0}
+.verify__how code{word-break:break-all;font-size:11px;margin-top:4px;display:inline-block}
+
 /* ---------- requirements ---------- */
 .reqs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .req{padding:28px;border:1px solid var(--border);border-radius:var(--radius);background:var(--glass)}
@@ -446,4 +470,5 @@ h1,h2,h3{line-height:1.12;letter-spacing:-.02em;margin:0}
 @media (max-width:430px){
   .brand__text{display:none}            /* logo-only brand on very small screens */
   .dl__meta li{flex:1 1 40%}
+  .verify__btn{width:100%}
 }

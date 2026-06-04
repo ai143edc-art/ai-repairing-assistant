@@ -107,6 +107,37 @@
     });
   }
 
+  /* ---- one-click SHA-256 integrity verifier ---- */
+  var verifyBtn = document.getElementById("verifyBtn");
+  var verifyInput = document.getElementById("verifyInput");
+  var verifyResult = document.getElementById("verifyResult");
+  var hashEl = document.getElementById("hashCode");
+  if (verifyBtn && verifyInput && verifyResult && hashEl) {
+    var expected = (hashEl.textContent || "").replace(/[^0-9a-fA-F]/g, "").toLowerCase();
+    var setRes = function (cls, msg) {
+      verifyResult.classList.remove("ok", "bad", "hint");
+      verifyResult.classList.add(cls);
+      verifyResult.textContent = msg;
+    };
+    var runVerify = function () {
+      var compact = (verifyInput.value || "").replace(/\s+/g, "");   // strip spaces/newlines (certutil)
+      var m = compact.match(/[0-9a-fA-F]{64}/);                       // find a 64-hex run
+      if (!m) {
+        setRes("hint", "Paste the 64-character SHA-256 from PowerShell above, then click Check.");
+        return;
+      }
+      if (m[0].toLowerCase() === expected) {
+        setRes("ok", "✅ Verified — genuine, untampered file. Safe to install.");
+      } else {
+        setRes("bad", "⚠️ No match! This file may be corrupted or tampered with. Delete it and download again — do not install.");
+      }
+    };
+    verifyBtn.addEventListener("click", runVerify);
+    verifyInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); runVerify(); }
+    });
+  }
+
   /* ---- smooth-scroll the data-dl buttons to #download ---- */
   document.querySelectorAll('a[data-dl]').forEach(function (a) {
     a.addEventListener("click", function (e) {
